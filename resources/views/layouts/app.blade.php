@@ -12,8 +12,28 @@
  
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <style>
+      input[type=number]::-webkit-inner-spin-button, 
+      input[type=number]::-webkit-outer-spin-button { 
+          -webkit-appearance: none; 
+          margin: 0; 
+      }
+      .loader {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
+          opacity: .8;
+          background-size:200px 120px;
+      }
+  </style>
 </head>
 <body class="hold-transition layout-top-nav">
+  <div id = "myDiv" style="display:none;" class="loader">
+	</div>
 @yield('content')
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -23,5 +43,15 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<script type='text/javascript'>
+ function logout()
+    {
+        event.preventDefault();
+        document.getElementById('logout-form').submit();
+    }
+  function show() {
+      document.getElementById("myDiv").style.display="block";
+  }
+</script>
 </body>
 </html>

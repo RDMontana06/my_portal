@@ -27,96 +27,47 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-9">
-                    <h1>Wednesday, March 9th</h1>
-                    <h2>Good afternoon, <br> Reymart Montana</h2>
-                  </div>
-                  <div class="col-sm-3">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <form class="ml-0">
-              <div class="input-group mb-3 flex-nowrap">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </form>
-            
-            <div class="card">
               <div class="card-header">
                 <h5 class="card-title">PORTALS</h5>
               </div>
               <div class="card-body">
                 <div class="container">
                   <div class="row">
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/HRIS-LOGO.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/EDMS-LOGO.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/MMS-LOGO.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
+                    <div class='col-md-12'>
+                        <input class="form-control" id="Search" onkeyup="myFunction()" width='100%;' type="text" placeholder="Search" aria-label="Search">
                     </div>
                   </div>
+                  <br>
                   <div class="row">
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/pmi-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
+                    @foreach($portals as $portal)
+                    <div class="col-sm-3 col-sm text-center target">
+                      <a href="{{$portal->link_portal}}" class="" target='_blank'>
+                        <img src="{{ asset($portal->image_icon)}}" alt="icon" class=" img-fluid img-bordered-sm mb-2">
                       </a>
+                      <span>{{$portal->title_portal}}</span>
                     </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/mac-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/ocs-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/plc-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/obanana-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
-                    <div class="col-sm-4 col-sm">
-                      <a href="/" class="">
-                        <img src="{{ asset('dist/img/logo/ocs-acu.png') }}" alt="pmi-logo" class=" img-fluid img-bordered-sm mb-2">
-                      </a>
-                    </div>
+                    @endforeach
                   </div>
                 </div>
               </div>
             </div>
-
-            
           </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-4">
             <div class="card">
               <div class="card-body">
-                <img src="{{ asset('dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-70 img-circle mx-auto d-block ">
-                <h5 class="mt-4 text-center">Reymart Montana</h5>
-                <h6 class="mt-2 text-center">Application Support</h6>
+                <div class="row">
+                  <div class="col-lg-4 text-center">
+                    <img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail ">
+                    <a href="{{ route('logout') }}"  onclick="logout(); show();">
+                      <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                  </div>
+                  <div class="col-lg-8">
+                    <h5 class="mt-4 ">{{auth()->user()->name}}</h5>
+                    <h6 class="mt-2 ">Application Support</h6>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -150,6 +101,9 @@
     </div>
     <!-- /.content -->
   </div>
+  <form id="logout-form"  action="{{ route('logout') }}"  method="POST" style="display: none;">
+    {{ csrf_field() }}
+  </form>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -157,6 +111,22 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+  <script>
+    
+     function myFunction() {
+        var input = document.getElementById("Search");
+        var filter = input.value.toLowerCase();
+        var nodes = document.getElementsByClassName('target');
+        
+        for (i = 0; i < nodes.length; i++) {
+            if (nodes[i].innerText.toLowerCase().includes(filter)) {
+                nodes[i].style.display = "";
+            } else {
+                nodes[i].style.display = "none";
+            }
+        }
+    }
+  </script>
 
   @include('layouts.footer')
 </div>
