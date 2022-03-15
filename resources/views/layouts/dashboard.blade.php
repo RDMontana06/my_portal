@@ -23,15 +23,68 @@
 
     <!-- Main content -->
     <div class="content">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-8">
-            <div class="card">
+        <div class="col-lg-2">
+          <div class="card card-success card-outline">
               <div class="card-header">
-                <h5 class="card-title">PORTALS</h5>
+                <h5 class="card-title m-0"><i class="fa-solid fa-party-horn"></i> Birthday Celebrants </h5>
+                
+              </div>
+              <div class="card-body">
+              <h4>{{ (date('F d')) }}</h4>
+              <div class="row">
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Reymart Montana</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Jeff Cefiro Jurolan</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Renz Cabato</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Ric Ric Mendoza</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-success card-outline">
+              <div class="card-header">
+                <h5 class="card-title m-0"><i class="fa-solid fa-users"></i> New Employees </h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                      <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Johnny Sins - PMI</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                      <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Lexi Lore - CSC</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                      <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Mia Khalifa - MBI</small>
+                  </div>
+                  <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                      <span class="mr-2"><img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail img-sm"></span> <small>Ma. Ozawa - IMC</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+          <div class="col-lg-8">
+            <div class="card card-success card-outline">
+              <div class="card-header">
+                <h5 class="card-title">PORTALS <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#new_portal"><i class="fa-solid fa-plus" ></i></button></h5>
               </div>
               <div class="card-body">
                 <div class="container">
+                    @if(session()->has('status'))
+                      <div class="alert alert-success alert-dismissable">
+                          <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                          {{session()->get('status')}}
+                      </div>
+                    @endif
                   <div class="row">
                     <div class='col-md-12'>
                         <input class="form-control" id="Search" onkeyup="myFunction()" width='100%;' type="text" placeholder="Search" aria-label="Search">
@@ -40,20 +93,20 @@
                   <br>
                   <div class="row">
                     @foreach($portals as $portal)
-                    <div class="col-sm-3 col-sm text-center target">
+                    <div class="col-sm-2 col-sm text-center target">
                       <a href="{{$portal->link_portal}}" class="" target='_blank'>
                         <img src="{{ asset($portal->image_icon)}}" alt="icon" class=" img-fluid img-bordered-sm mb-2">
                       </a>
-                      <span>{{$portal->title_portal}}</span>
+                      <h5 class="display-5">{{$portal->title_portal}}</h5>
                     </div>
                     @endforeach
                   </div>
                 </div>
               </div>
             </div>
+            @include('layouts.new_portal')
           </div>
-          <!-- /.col-md-6 -->
-          <div class="col-lg-4">
+          <div class="col-lg-2">
             <div class="card">
               <div class="card-body">
                 <div class="row">
@@ -73,18 +126,17 @@
 
             <div class="card card-success card-outline">
               <div class="card-header">
-                <h5 class="card-title m-0">Bulletins</h5>
+                <h5 class="card-title m-0">Bulletins <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#new_bulletin"><i class="fa-solid fa-plus" ></i>
+                </button></h5>
               </div>
               <div class="card-body">
-              <div class="row">
-                  <div class="col-sm-2 col-xl-2 col-lg-2 col-md-2 mx-auto px-auto">
-                   <i class="fas fa-calendar-week fa-lg"></i>
+                <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <a href="http://">
+                      <i class="fa-solid fa-file-pdf mr-2"> </i> <small>Memo - Approval Matrix</small>
+                    </a>
                   </div>
-                  <div class="col-sm-10 col-xl-10 col-lg-10 col-md-10 mx-auto px-auto">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-                </div>
               </div>
+              @include('layouts.new_bulletin')
             </div>
             <div class="card card-success card-outline">
               <div class="card-header">

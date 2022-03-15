@@ -4,7 +4,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="{{URL::asset('/images/myportal.png')}}"/>
+        <link rel="icon" type="image/png" href="{{URL::asset('/images/myPortal-icon.png')}}"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/vendor/bootstrap/css/bootstrap.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/css/util.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/css/main.css')}}">

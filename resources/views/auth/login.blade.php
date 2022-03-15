@@ -6,10 +6,10 @@
             <form class="login100-form validate-form" method="POST" action="" onsubmit="show()">
                 {{ csrf_field() }}
                 <span class="login100-form-avatar" style='width:400px;'>
-                    <img src="{{URL::asset('/images/myportal.png')}}" alt="AVATAR">
+                    <img src="{{URL::asset('/images/myPortal-logo.png')}}" alt="AVATAR">
                 </span>
                 <div class="wrap-input100 validate-input m-t-15 m-b-35" data-validate = "Enter Email">
-                    <input id="email" type="email"class="input100" name="email" value="{{ old('email') }}"  required autofocus>
+                    <input id="email" type="email"class="input100" name="email" value="{{ old('email') }}"  required autofocus autocomplete="true">
                     <span class="focus-input100" data-placeholder="Email"></span>
                 </div>
                 <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
@@ -33,11 +33,16 @@
                     <button class="login100-form-btn">
                         Login
                     </button>
-                    <br>
-                    <button class="login100-form"  >
-                        <a style='color:black' href="{{ route('password.request') }}" onclick='show()'>Forgot Password</a>
-                    </button>
                     
+                    
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-6">
+                        <a style='color:black' href="{{ route('password.request') }}" onclick='show()'>Forgot Password</a>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a style='color:black' href="{{ route('register') }}" onclick='show()'>Register</a>
+                    </div>
                 </div>
             </form>
         </div>
