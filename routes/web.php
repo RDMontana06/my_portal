@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +15,16 @@
 Auth::routes();
 Route::group( ['middleware' => 'auth'], function()
 {
+    
     Route::get('/','HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::post('new-portal', 'PortalController@new_portal');
+    Route::post('updatePortalStatus/{id}', 'PortalController@updatePortalStatus');
+    Route::post('new-bulletin', 'BulletinController@new_bulletin');
+    Route::post('deleteBulletin', 'BulletinController@deleteBulletin');
 });
+
+Route::post('saveEmployee', 'RegisterController@saveEmployee');
+Route::get('signup', 'RegisterController@register');
+
     

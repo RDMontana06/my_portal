@@ -6,6 +6,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>AdminLTE 2 | Dashboard</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
@@ -275,5 +276,6 @@
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
           Both of these plugins are recommended to enhance the
           user experience -->
+    @include('sweetalert::alert')
     </body>
 </html>

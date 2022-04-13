@@ -8,7 +8,6 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/vendor/bootstrap/css/bootstrap.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/css/util.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/login_css/css/main.css')}}">
-        <script src="{{ asset('jquery.min.js')}}"></script>
         <style>
             input[type=number]::-webkit-inner-spin-button, 
             input[type=number]::-webkit-outer-spin-button { 

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Portal;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PortalController extends Controller
 {
     public function new_portal(Request $request){
         // dd($request->all());
-
+        
         $this->validate($request, [
             'title_portal' => 'unique:portals|required',
             'link_portal' => 'required',
@@ -30,7 +31,16 @@ class PortalController extends Controller
         $portal->add_by = auth()->user()->id;
         
         $portal->save();
-        $request->session()->flash('status','Successfully created');
+        Alert::success('Successfully Created', 'Portal Name '.$portal->title_portal)->persistent('Dismiss');
+        // return redirect('/home')->withSuccess('Task Created Successfully!');
+        // $request->session()->flash('status','Successfully created');
+        return back();
+    }
+    // Update Portal Status
+    public function updatePortalStatus(Request $request, $id){
+        // dd($request->all());
+        //Alert::question('Question Title', 'Question Message');
+        Portal::Where('id', $id )->update(['status' => 0]);
         return back();
     }
 }

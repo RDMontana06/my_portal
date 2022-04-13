@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome6/css/all.min.css') }}" >
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link href="{{ asset("plugins/sweetalert2/sweetalert2.css")}}" rel="stylesheet" type="text/css" />
+
   <style>
       input[type=number]::-webkit-inner-spin-button, 
       input[type=number]::-webkit-outer-spin-button { 
@@ -44,6 +46,7 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
+<script src="{{ asset ("plugins/sweetalert2/sweetalert2.all.js") }}" type="text/javascript"></script>
 <script type='text/javascript'>
  function logout()
     {

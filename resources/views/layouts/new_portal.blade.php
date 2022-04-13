@@ -16,7 +16,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter title" name="title_portal" required>
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="title" placeholder="Enter title" name="title_portal" required>
                     </div>
                     <div class="form-group">
                         <label for="link">Link</label>
