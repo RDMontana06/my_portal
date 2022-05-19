@@ -15,7 +15,6 @@ class PortalController extends Controller
             'title_portal' => 'unique:portals|required',
             'link_portal' => 'required',
             'image_icon' => 'required',
-            
         ]);
 
         $portal = new Portal;

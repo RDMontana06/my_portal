@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
+use Validator;
 use GuzzleHttp\Client;
 use App\Employee;
+use App\User;
 use RealRashid\SweetAlert\Facades\Alert;
-use Validator;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 
@@ -56,13 +58,10 @@ class RegisterController extends Controller
         ));
     }
     public function saveEmployee(Request $request){
-       
-        
+
         $validator = Validator::make($request->all(),[
             'employee_code' => 'unique:employees|required',
             'first_name' => 'required',
-            'middle_name' => 'required',
-            'middle_initial' => 'required',
             'last_name' => 'required',
             'company' => 'required',
             'department' => 'required',
@@ -77,12 +76,17 @@ class RegisterController extends Controller
             'present_address' => 'required',
             'permanent_address' => 'required',
             'mobile_number' => 'required',
-            'personal_email' => 'unique:employees|required',
-            'company_email' => 'unique:employees|required',
+            'personal_email' => 'email|unique:employees',
+            'company_email' => 'email|unique:employees',
+            'upload_image' => 'required|mimes:jpeg,jpg,bmp,png',
+            'password' =>  'required|min:6|confirmed',
+            'password_confirmation' =>  'same:password'
         ]);
-        //dd($validator);
         if ($validator->fails()) {
-            return back()->with('errors', $validator->messages()->all()[0])->withInput();
+            return redirect('/signup')
+                    ->withErrors($validator)
+                    ->withInput();
+            
         }
 
         $employee = new Employee;
@@ -119,8 +123,15 @@ class RegisterController extends Controller
         $employee->upload_image = $file_name;
         
         $employee->save();
+
+        $user = New User;
+        $user->email = $employee->company_email;
+        $user->name = $employee->first_name." ".$employee->last_name;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
         
-        Alert::success('Successfully Register', 'Thank you for your registration')->persistent('Dismiss');
-        return redirect('/login');
+        Alert::success('Successfully Register', 'Email:' . $user->email)->persistent('Dismiss');
+        return redirect('login');
     }
 }
