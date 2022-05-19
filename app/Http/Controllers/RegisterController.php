@@ -17,44 +17,12 @@ class RegisterController extends Controller
     public function register(){
         Alert::success('Success Title', 'Thank you for your registration');
 
-        $client = new Client([
-            'base_uri' => 'http://203.177.143.61:8080/HRAPI/public/',
-            'cookies' => true,
-            ]);
-
-        $data = $client->request('POST', 'oauth/token', [
-            'json' => [
-                'username' => 'rmontana@premiummegastructures.com',
-                'password' => 'P@ssw0rd',
-                'grant_type' => 'password',
-                'client_id' => '2',
-                'client_secret' => 'rVI1kVh07yb4TBw8JiY8J32rmDniEQNQayf3sEyO',
-                ]
-        ]);
-
-        $response = json_decode((string) $data->getBody());
-        $key = $response->access_token;
-
-        $dataCompany = $client->request('get', 'companies', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $key,
-                    'Accept' => 'application/json'
-                ],
-            ]);
-        $dataDepartment = $client->request('get', 'departments', [
-            'headers' => [
-                    'Authorization' => 'Bearer ' . $key,
-                    'Accept' => 'application/json'
-                ],
-            ]);
-        $responseCompany = json_decode((string) $dataCompany->getBody());
-        $companies = $responseCompany->data;
-        $responseDepartment = json_decode((string) $dataDepartment->getBody());
-        $departments = $responseDepartment->data;
+      
             // dd($departments);
         return view('auth.register', array(
-            'companies' => $companies,
-            'departments' => $departments
+            'companies' => [],
+            'departments' => [],
+
         ));
     }
     public function saveEmployee(Request $request){

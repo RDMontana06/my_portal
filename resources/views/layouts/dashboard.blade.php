@@ -88,7 +88,7 @@
                   <br>
                   <div class="row">
                     @foreach($portals as $portal)
-                     {{-- @if($portal->status == 1) --}}
+                     @if($portal->status == 1)
                     <div class="col-sm-2 col-sm text-center target" id='portal{{$portal->id}}'>
                       <div class="card">
                         <div class="card-header">
@@ -113,7 +113,7 @@
                         </div>
                       </div>
                     </div>
-                     {{-- @endif --}}
+                     @endif
                     @endforeach
                   </div>
                 </div>
