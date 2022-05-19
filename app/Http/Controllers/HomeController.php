@@ -29,7 +29,7 @@ class HomeController extends Controller
       
         // Alert::success('Success Title', 'Welcome '.auth()->user()->name);
         $user = User::with('employee')->where('id', auth()->user()->id)->first();
-        $portals = Portal::get();
+        $portals = Portal::where('status', 1)->get();
         $bulletins = Bulletin::get();
         return view('layouts.dashboard',
         array(
