@@ -88,7 +88,7 @@
                   <br>
                   <div class="row">
                     @foreach($portals as $portal)
-                     @if($portal->status != 0)
+                     @if($portal->status !== 0)
                     <div class="col-sm-2 col-sm text-center target" id='portal{{$portal->id}}'>
                       <div class="card">
                         <div class="card-header">
