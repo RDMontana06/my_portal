@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use GuzzleHttp\Exception\GuzzleException;
 use Validator;
 use GuzzleHttp\Client;
 use App\Employee;
 use App\User;
+use App\Company;
+use App\Department;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,20 +17,22 @@ use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     //
-    public function register(){
-        Alert::success('Success Title', 'Thank you for your registration');
+    public function register()
+    {
 
-      
-            // dd($departments);
+        $companies = Company::all();
+        $departments = Department::all();
+
+        // dd($departments);
         return view('auth.register', array(
-            'companies' => [],
-            'departments' => [],
-
+            'companies' => $companies,
+            'departments' => $departments,
         ));
     }
-    public function saveEmployee(Request $request){
+    public function saveEmployee(Request $request)
+    {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'employee_code' => 'unique:employees|required',
             'first_name' => 'required',
             'last_name' => 'required',
@@ -52,9 +57,8 @@ class RegisterController extends Controller
         ]);
         if ($validator->fails()) {
             return redirect('/signup')
-                    ->withErrors($validator)
-                    ->withInput();
-            
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $employee = new Employee;
@@ -80,26 +84,27 @@ class RegisterController extends Controller
         $employee->mobile_number = $request->mobile_number;
         $employee->personal_email = $request->personal_email;
         $employee->company_email = $request->company_email;
-        
+
 
         $attachment = $request->file('upload_image');
         $original_name = $attachment->getClientOriginalName();
-        $name = time().'_'.$attachment->getClientOriginalName();
-        $attachment->move(public_path().'/users/', $name);
-        $file_name = '/users/'.$name;
-        
+        $name = time() . '_' . $attachment->getClientOriginalName();
+        $attachment->move(public_path() . '/users/', $name);
+        $file_name = '/users/' . $name;
+
         $employee->upload_image = $file_name;
-        
+
         $employee->save();
 
-        $user = New User;
+        $user = new User;
         $user->email = $employee->company_email;
-        $user->name = $employee->first_name." ".$employee->last_name;
+        $user->name = $employee->first_name . " " . $employee->last_name;
         $user->password = Hash::make($request->password);
+        $user->role_id = 2;
         $user->save();
 
-        
+
         Alert::success('Successfully Register', 'Email:' . $user->email)->persistent('Dismiss');
-        return redirect('login');
+        return redirect('/login');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Portal;
 use App\Bulletin;
 use Illuminate\Http\Request;
@@ -26,17 +27,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-      
+
         // Alert::success('Success Title', 'Welcome '.auth()->user()->name);
         $user = User::with('employee')->where('id', auth()->user()->id)->first();
         $portals = Portal::where('status', 1)->get();
         $bulletins = Bulletin::get();
-        return view('layouts.dashboard',
-        array(
-            'portals' => $portals,
-            'bulletins' => $bulletins,
-            'user' => $user,
-        )
-    );
+        return view(
+            'layouts.dashboard',
+            array(
+                'portals' => $portals,
+                'bulletins' => $bulletins,
+                'user' => $user,
+            )
+        );
     }
 }
