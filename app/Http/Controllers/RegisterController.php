@@ -94,7 +94,6 @@ class RegisterController extends Controller
 
         $employee->upload_image = $file_name;
 
-        $employee->save();
 
         $user = new User;
         $user->email = $employee->company_email;
@@ -102,6 +101,9 @@ class RegisterController extends Controller
         $user->password = Hash::make($request->password);
         $user->role_id = 2;
         $user->save();
+
+        $employee->user_id = $user->id;
+        $employee->save();
 
 
         Alert::success('Successfully Register', 'Email:' . $user->email)->persistent('Dismiss');

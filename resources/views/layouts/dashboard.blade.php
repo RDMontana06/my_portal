@@ -141,19 +141,19 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-4 text-center">
-                                            <img src="{{ asset('images/no_image.png') }}" alt="User Avatar" class="img-fluid img-thumbnail">
-                                            <a href="{{ route('logout') }}" onclick="logout(); show();">
-                                                <i class="fa fa-sign-out"></i> Log out
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <h5 class="mt-4">{{ auth()->user()->name }}</h5>
-                                            <h6 class="mt-2">{{ $user->employee->position }}</h6>
-                                        </div>
-                                    </div>
+                                <div class="card-body align-items-center">
+                                    <img src="{{ asset($user->employee->upload_image) }}" alt="User Avatar" class="img-fluid img-thumbnail img-circle"
+                                        width="100">
+                                    <h5 class="mt-4">{{ auth()->user()->name }}</h5>
+                                    <h6 class="mt-2">{{ $user->employee->position }}</h6>
+                                    @if (auth()->user()->role_id == 1)
+                                        <a href="{{ url('users-data') }}" class="btn btn-primary">
+                                            <i class="fa fa-users"></i> Manage Users
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('logout') }}" class="btn btn-warning" onclick="logout(); show();">
+                                        <i class="fa fa-sign-out"></i>Log out
+                                    </a>
                                 </div>
                             </div>
 
@@ -171,8 +171,10 @@
                                     @foreach ($bulletins as $bulletin)
                                         <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2" id='bulletin{{ $bulletin->id }}'>
 
-                                            <button type="button" id="{{ $bulletin->id }}" onclick="getBulletinId(this.id)"
-                                                class="close btn-delete-portal"><span class="fa-solid fa-trash text-red"></span></button>
+                                            @if (auth()->user()->role_id == 1)
+                                                <button type="button" id="{{ $bulletin->id }}" onclick="getBulletinId(this.id)"
+                                                    class="close btn-delete-portal"><span class="fa-solid fa-trash text-red"></span></button>
+                                            @endif
                                             <a href="{{ $bulletin->file_path }}" target='_blank'>
                                                 <i class="fa-solid fa-file-pdf mr-2"> </i>
                                                 <small>{{ $bulletin->title }}</small>
@@ -351,7 +353,6 @@
                 })
             }
         </script>
-
         @include('layouts.footer')
         @include('sweetalert::alert')
     </div>

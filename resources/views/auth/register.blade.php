@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label class="sr-only" for="permanent_address">Permanent Address</label>
                             <textarea value='{{ old('permanent_address') }}' name="permanent_address" placeholder="Permanent address..." class="form-control"
-                                id="permanent_address"></textarea>
+                                id="permanent_address">{{ old('permanent_address') }}</textarea>
                         </div>
                     </div>
                 </div>

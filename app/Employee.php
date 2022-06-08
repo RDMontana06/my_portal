@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     //
-    public function companies(){
+    public function companies()
+    {
         return $this->belongsTo('App\Company');
     }
-    public function department(){
+    public function department()
+    {
         return $this->belongsTo('App\Department');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
