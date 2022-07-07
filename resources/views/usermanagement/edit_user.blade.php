@@ -72,13 +72,15 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="position">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="name" name="name" value="{{ $user->name }}">
+                                <input type="text" class="form-control" id="name" placeholder="name" name="name"
+                                    value="{{ $user->name }}">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="position">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="email" name="email" value="{{ $user->email }}">
+                                <input type="email" class="form-control" id="email" placeholder="email" name="email"
+                                    value="{{ $user->email }}">
                             </div>
                         </div>
                         {{-- <div class="col-md-3 align-middle">
@@ -91,6 +93,20 @@
                                 </div>
                             </div>
                         </div> --}}
+
+
+                    </div>
+                    <hr>
+                    <h5>Roles</h5>
+                    <div class="form-group">
+                        <select class="select2bs4" name="role[]" multiple="multiple" data-placeholder="Select Roles" style="width: 100%;">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}"
+                                    {{ in_array($role->id, $user->user_roles->pluck('role_id')->toArray()) ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
             </div>
             <div class="modal-footer">

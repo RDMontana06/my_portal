@@ -84,7 +84,7 @@
                             <div class="card card-success card-outline">
                                 <div class="card-header">
                                     <h5 class="card-title">PORTALS
-                                        @if (auth()->user()->role_id == 1)
+                                        @if (in_array(1, $user->user_roles->pluck('role_id')->toArray()) || in_array(3, $user->user_roles->pluck('role_id')->toArray()))
                                             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#new_portal"><i
                                                     class="fa-solid fa-plus"></i></button>
                                         @endif
@@ -105,33 +105,34 @@
                                                 {{-- @if ($portal->status !== 0) --}}
                                                 <div class="col-sm-2 col-sm target text-center" id='portal{{ $portal->id }}'>
                                                     <div class="card">
-                                                        <div class="card-header">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                </div>
-                                                                @if (auth()->user()->role_id == 1)
+                                                        @if (in_array(1, $user->user_roles->pluck('role_id')->toArray()) || in_array(2, $user->user_roles->pluck('role_id')->toArray()))
+                                                            <div class="card-header">
+                                                                <div class="row">
                                                                     <div class="col">
+                                                                    </div>
+                                                                    <div class="col">
+
                                                                         <button type="button" id="{{ $portal->id }}" onclick="getPortalId(this.id)"
                                                                             class="close btn-delete-portal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                         <div class="card-body mx-auto p-0">
-
                                                             <a href="{{ $portal->link_portal }}" class="" target='_blank'>
                                                                 <img src="{{ asset($portal->image_icon) }}" alt="icon"
-                                                                    class="img-fluid img-bordered-sm mb-2">
+                                                                    class="img-fluid img-bordered-sm">
                                                             </a>
                                                         </div>
                                                         <div class="card-footer">
-                                                            <small class="text-bold text-wrap">{{ $portal->title_portal }} </small>
+                                                            <small class="text-bold text-wrap">
+                                                                {{ $portal->title_portal }}
+                                                            </small>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- @endif --}}
                                             @endforeach
                                         </div>
                                     </div>
@@ -140,17 +141,21 @@
                             @include('layouts.new_portal')
                         </div>
                         <div class="col-lg-2">
-                            <div class="card">
-                                <div class="card-body align-items-center">
-                                    <img src="{{ asset($user->employee->upload_image) }}" alt="User Avatar" class="img-fluid img-thumbnail img-circle"
-                                        width="100">
+                            <div class="card card-success card-outline">
+                                <div class="card-body d-flex justify-content-center flex-column">
+                                    <img src="{{ asset($user->employee->upload_image) }}" alt="User Avatar"
+                                        class="img-fluid img-thumbnail img-circle text-center" width="100">
                                     <h5 class="mt-4">{{ auth()->user()->name }}</h5>
                                     <h6 class="mt-2">{{ $user->employee->position }}</h6>
-                                    @if (auth()->user()->role_id == 1)
-                                        <a href="{{ url('users-data') }}" class="btn btn-primary">
+                                    @if (in_array(1, $user->user_roles->pluck('role_id')->toArray()) || in_array(3, $user->user_roles->pluck('role_id')->toArray()))
+                                        <a href="{{ url('user') }}" class="btn btn-primary">
                                             <i class="fa fa-users"></i> Manage Users
                                         </a>
+                                        <a href="{{ url('roles') }}" class="btn btn-info">
+                                            <i class="fa fa-gear"></i> Manage Roles
+                                        </a>
                                     @endif
+
                                     <a href="{{ route('logout') }}" class="btn btn-warning" onclick="logout(); show();">
                                         <i class="fa fa-sign-out"></i>Log out
                                     </a>
@@ -160,18 +165,17 @@
                             <div class="card card-success card-outline">
                                 <div class="card-header">
                                     <h5 class="card-title m-0"><i class="fa-solid fa-calendar-star"></i> Bulletins
-                                        @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 3)
+                                        @if (in_array(1, $user->user_roles->pluck('role_id')->toArray()) || in_array(3, $user->user_roles->pluck('role_id')->toArray()))
                                             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#new_bulletin"><i
                                                     class="fa-solid fa-plus"></i>
                                             </button>
+                                        @endif
                                     </h5>
-                                    @endif
                                 </div>
                                 <div class="card-body">
                                     @foreach ($bulletins as $bulletin)
                                         <div class="col-sm-12 col-xl-12 col-lg-12 col-md-12 mb-2" id='bulletin{{ $bulletin->id }}'>
-
-                                            @if (auth()->user()->role_id == 1)
+                                            @if (in_array(1, $user->user_roles->pluck('role_id')->toArray()) || in_array(3, $user->user_roles->pluck('role_id')->toArray()))
                                                 <button type="button" id="{{ $bulletin->id }}" onclick="getBulletinId(this.id)"
                                                     class="close btn-delete-portal"><span class="fa-solid fa-trash text-red"></span></button>
                                             @endif

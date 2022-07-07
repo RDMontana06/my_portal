@@ -78,7 +78,7 @@
                                                 </td>
                                                 <td width="20%" id="btnTd{{ $user->id }}" data-id="{{ $user->id }}">
                                                     @if ($user->status == 1)
-                                                        @if ($user->role_id != 1)
+                                                        @if (!in_array(1, $user->user_roles->pluck('role_id')->toArray()))
                                                             <button type="button" id="{{ $user->id }}" onclick="disableUser({{ $user->id }})"
                                                                 class="disableBTn btn btn-danger" title="Disable">
                                                                 <span class="fa fa-ban"></span>
@@ -89,11 +89,13 @@
                                                             data-target="#editModal{{ $user->id }}" class="editBtn btn btn-primary" title="Edit">
                                                             <span class="fa fa-pencil"></span>
                                                         </button>
-                                                        <button type="button" id="{{ $user->id }}" data-toggle="modal"
-                                                            data-target="#change_pass{{ $user->id }}" class="resetBtn btn btn-secondary"
-                                                            title="Reset Password">
-                                                            <span class="fa fa-arrow-rotate-left"></span>
-                                                        </button>
+                                                        @if (!in_array(1, $user->user_roles->pluck('role_id')->toArray()))
+                                                            <button type="button" id="{{ $user->id }}" data-toggle="modal"
+                                                                data-target="#change_pass{{ $user->id }}" class="resetBtn btn btn-secondary"
+                                                                title="Reset Password">
+                                                                <span class="fa fa-arrow-rotate-left"></span>
+                                                            </button>
+                                                        @endif
                                                     @else
                                                         <button type="button" id="{{ $user->id }}" onclick="activateUser(this.id)"
                                                             class="activateBTn btn btn-success" title="Enable">

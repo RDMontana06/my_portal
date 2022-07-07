@@ -6,6 +6,7 @@ use App\Portal;
 use App\Bulletin;
 use Illuminate\Http\Request;
 use App\User;
+use App\Roles;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
@@ -29,7 +30,7 @@ class HomeController extends Controller
     {
 
         // Alert::success('Success Title', 'Welcome '.auth()->user()->name);
-        $user = User::with('employee')->where('id', auth()->user()->id)->first();
+        $user = User::with('employee', 'user_roles.roles')->where('id', auth()->user()->id)->first();
         $portals = Portal::where('status', 1)->get();
         $bulletins = Bulletin::get();
         return view(

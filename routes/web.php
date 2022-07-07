@@ -25,11 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('deleteBulletin/{id}', 'BulletinController@deleteBulletin');
 
     // User Management
-    Route::get('users-data', 'UsersManagementController@index');
+    Route::get('user', 'UsersManagementController@index');
     Route::post('disableUser/{id}', 'UsersManagementController@disable');
     Route::post('activateUser/{id}', 'UsersManagementController@activate');
-    Route::post('editUser/{id}', 'UsersManagementController@edit');
+    Route::post('editUser/{id}', 'UsersManagementController@update');
     Route::post('change-password/{id}', 'UsersManagementController@changePassword');
+
+    // Roles Management
+    Route::get('roles', 'RolesManagementController@index');
+    Route::post('new-role', 'RolesManagementController@new_role');
 });
 
 Route::post('saveEmployee', 'RegisterController@saveEmployee');

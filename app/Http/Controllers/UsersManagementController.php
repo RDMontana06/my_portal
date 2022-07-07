@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
-use app\User;
+use App\User;
+use App\Roles;
+use App\UserRoles;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,11 +17,13 @@ class UsersManagementController extends Controller
 
     public function index()
     {
-        $users = User::with('employee')->get();
 
+        $users = User::with('employee', 'user_roles.roles')->get();
+        $roles = Roles::all();
 
         return view('usermanagement.index', array(
-            'users' => $users
+            'users' => $users,
+            'roles' => $roles
         ));
     }
     public function disable($id)
@@ -32,7 +36,7 @@ class UsersManagementController extends Controller
         User::Where('id', $id)->update(['status' => 1]);
         return back();
     }
-    public function edit(Request $request, $id)
+    public function update(Request $request, $id)
     {
 
         $this->validate($request, [
@@ -44,6 +48,15 @@ class UsersManagementController extends Controller
             'email' => 'unique:users,email,' . $id . '|required',
             'name' => 'required',
         ]);
+        if ($request->role) {
+            $userRoleDel = UserRoles::where('user_id', $id)->delete();
+            foreach ($request->role as $key => $role) {
+                $userRole = new UserRoles;
+                $userRole->user_id = $id;
+                $userRole->role_id = $role;
+                $userRole->save();
+            }
+        }
 
         $user =  User::findOrFail($id);
         $user->email = $request->input('email');
@@ -58,8 +71,10 @@ class UsersManagementController extends Controller
         $employee->permanent_address = $request->input('permanent_address');
         $employee->save();
 
+
+
         Alert::success('Updated', 'Successfully Updated')->persistent('Dismiss');;
-        return redirect('users-data');
+        return redirect('user');
     }
     public function changePassword(Request $request, $id)
     {
@@ -71,6 +86,6 @@ class UsersManagementController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         Alert::success('Changed', 'Change Successfully')->persistent('Dismiss');;
-        return redirect('users-data');
+        return redirect('user');
     }
 }
